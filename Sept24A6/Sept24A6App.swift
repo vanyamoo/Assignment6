@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct Sept24A6App: App {
-    @State private var game = EmojiMemoryGame()
+    //@State private var game = EmojiMemoryGame()
     @State private var themes = ThemesStore()
         var body: some Scene {
             WindowGroup {
