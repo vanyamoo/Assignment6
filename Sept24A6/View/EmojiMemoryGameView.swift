@@ -18,7 +18,7 @@ struct EmojiMemoryGameView: View {
                 Text("Score: \(game.score)")
                 Spacer()
                 Text(game.theme.name)
-                    .foregroundStyle(game.theme.mainColor)
+                    .foregroundStyle(game.theme.primaryColor)
                 Spacer()
                 Button("New Game") {
                     game.startNewGame()
@@ -38,7 +38,7 @@ struct EmojiMemoryGameView: View {
                         }
                 }
             }
-            .foregroundStyle(game.theme.mainColor)
+            .foregroundStyle(game.theme.primaryColor)
             Spacer()
         }
         .padding(.horizontal)
