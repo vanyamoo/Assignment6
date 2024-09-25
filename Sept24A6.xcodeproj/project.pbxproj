@@ -8,17 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		4ECAB6D42CA41A8C00E32BCE /* Sept24A6App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAB6D32CA41A8C00E32BCE /* Sept24A6App.swift */; };
-		4ECAB6D62CA41A8C00E32BCE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAB6D52CA41A8C00E32BCE /* ContentView.swift */; };
 		4ECAB6D82CA41A8D00E32BCE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ECAB6D72CA41A8D00E32BCE /* Assets.xcassets */; };
 		4ECAB6DB2CA41A8D00E32BCE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ECAB6DA2CA41A8D00E32BCE /* Preview Assets.xcassets */; };
+		4ECAB6E42CA41B1400E32BCE /* EmojiMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAB6E12CA41B1300E32BCE /* EmojiMemoryGameView.swift */; };
+		4ECAB6E52CA41B1400E32BCE /* EmojiMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAB6E22CA41B1400E32BCE /* EmojiMemoryGame.swift */; };
+		4ECAB6E62CA41B1400E32BCE /* MemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAB6E32CA41B1400E32BCE /* MemoryGame.swift */; };
+		4ECAB6E82CA41B2900E32BCE /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAB6E72CA41B2900E32BCE /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4ECAB6D02CA41A8C00E32BCE /* Sept24A6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sept24A6.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ECAB6D32CA41A8C00E32BCE /* Sept24A6App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sept24A6App.swift; sourceTree = "<group>"; };
-		4ECAB6D52CA41A8C00E32BCE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4ECAB6D72CA41A8D00E32BCE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4ECAB6DA2CA41A8D00E32BCE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4ECAB6E12CA41B1300E32BCE /* EmojiMemoryGameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGameView.swift; sourceTree = "<group>"; };
+		4ECAB6E22CA41B1400E32BCE /* EmojiMemoryGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiMemoryGame.swift; sourceTree = "<group>"; };
+		4ECAB6E32CA41B1400E32BCE /* MemoryGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryGame.swift; sourceTree = "<group>"; };
+		4ECAB6E72CA41B2900E32BCE /* Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				4ECAB6D32CA41A8C00E32BCE /* Sept24A6App.swift */,
-				4ECAB6D52CA41A8C00E32BCE /* ContentView.swift */,
+				4ECAB6E22CA41B1400E32BCE /* EmojiMemoryGame.swift */,
+				4ECAB6E12CA41B1300E32BCE /* EmojiMemoryGameView.swift */,
+				4ECAB6E32CA41B1400E32BCE /* MemoryGame.swift */,
+				4ECAB6E72CA41B2900E32BCE /* Theme.swift */,
 				4ECAB6D72CA41A8D00E32BCE /* Assets.xcassets */,
 				4ECAB6D92CA41A8D00E32BCE /* Preview Content */,
 			);
@@ -137,8 +146,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ECAB6D62CA41A8C00E32BCE /* ContentView.swift in Sources */,
 				4ECAB6D42CA41A8C00E32BCE /* Sept24A6App.swift in Sources */,
+				4ECAB6E62CA41B1400E32BCE /* MemoryGame.swift in Sources */,
+				4ECAB6E82CA41B2900E32BCE /* Theme.swift in Sources */,
+				4ECAB6E42CA41B1400E32BCE /* EmojiMemoryGameView.swift in Sources */,
+				4ECAB6E52CA41B1400E32BCE /* EmojiMemoryGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
