@@ -11,11 +11,12 @@ struct ThemeChooser: View {
     //@State private var game = EmojiMemoryGame()
     @State private var showGame = false
     
-    var themesStore: ThemesStore
+    @ObservedObject var store: ThemesStore
+    
     var body: some View {
         NavigationStack {
             List {
-                ForEach(themesStore.themes) { theme in
+                ForEach(store.themes) { theme in
                     ScrollView {
                         NavigationLink(value: theme.id) {
                             VStack {
@@ -43,22 +44,24 @@ struct ThemeChooser: View {
                     }
                 }
             }
-//            .navigationDestination(isPresented: $showGame) {
-//                EmojiMemoryGameView(game: game)
-//            }
-            
             .navigationDestination(for: Theme.ID.self) { themeId in
-                if let index = themesStore.themes.firstIndex(where: { $0.id == themeId }) {
-                    EmojiMemoryGameView(game: EmojiMemoryGame(themesStore.themes[index]))
-
+                if let index = store.themes.firstIndex(where: { $0.id == themeId }) {
+                    EmojiMemoryGameView(game: EmojiMemoryGame(store.themes[index]))
                 }
             }
             .navigationTitle("Themes")
+            .toolbar {
+                Button {
+                    store.append(name: "")
+                    //showCursorPalette = true
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
         }
-        
     }
 }
 
-#Preview {
-    ThemeChooser(themesStore: ThemesStore())
-}
+//#Preview {
+//    ThemeChooser(themesStore: ThemesStore())
+//}

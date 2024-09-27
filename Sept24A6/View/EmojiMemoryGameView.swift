@@ -21,7 +21,7 @@ struct EmojiMemoryGameView: View {
                     .foregroundStyle(game.theme.primaryColor)
                 Spacer()
                 Button("New Game") {
-                    game.startNewGame()
+                    //game.startNewGame()
                 }
             }
             
@@ -70,5 +70,5 @@ struct CardView: View {
 }
 //@available(iOS 17.0, *)
 #Preview {
-      EmojiMemoryGameView(game: EmojiMemoryGame())
+    EmojiMemoryGameView(game: EmojiMemoryGame(Theme(name: "Music", emojis: ["🎼","🎤","🎹","🪘","🥁","🎺","🪗","🪕","🎻"], numOfPairsOfCards: 8, color: RGBA(color: .pink), id: 2)))
 }

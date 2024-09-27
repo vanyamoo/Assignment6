@@ -10,11 +10,11 @@ import SwiftUI
 @main
 struct Sept24A6App: App {
     //@State private var game = EmojiMemoryGame()
-    @State private var themes = ThemesStore()
+    @StateObject private var themesStore = ThemesStore()
         var body: some Scene {
             WindowGroup {
                 //EmojiMemoryGameView(game: game)
-                ThemeChooser(themesStore: themes)
+                ThemeChooser(store: themesStore)
             }
         }
 }

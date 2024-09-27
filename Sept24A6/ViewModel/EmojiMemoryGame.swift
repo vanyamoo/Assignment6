@@ -12,16 +12,16 @@ import SwiftUI
     
     typealias Card = MemoryGame<String>.Card
     
-    private var model = createMemoryGame()
+    private var model: MemoryGame<String> // = createMemoryGame()
     
     private(set) var theme: Theme
     
-    init(_ theme: Theme = createRandomTheme()) {
+    init(_ theme: Theme) {
         self.theme = theme
         self.model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
     
-    private static func createMemoryGame(theme: Theme = createRandomTheme()) -> MemoryGame<String> {
+    private static func createMemoryGame(theme: Theme) -> MemoryGame<String> {
         MemoryGame<String>(numberOfPairs: theme.numOfPairsOfCards) { pairIndex in
             if theme.emojis.indices.contains(pairIndex) {
                 return theme.emojis[pairIndex]
@@ -31,9 +31,9 @@ import SwiftUI
         }
     }
     
-    private static func createRandomTheme() -> Theme {
-        Theme.builtinThemes.randomElement()!
-    }
+//    private static func createRandomTheme() -> Theme {
+//        Theme.builtinThemes.randomElement()!
+//    }
     
     var cards: Array<Card> {
         model.cards
@@ -49,7 +49,7 @@ import SwiftUI
         model.choose(card)
     }
     
-    func startNewGame(_ theme: Theme = createRandomTheme()) {
+    func startNewGame(_ theme: Theme) {
         self.theme = theme
         self.model = EmojiMemoryGame.createMemoryGame(theme: theme)
     }
