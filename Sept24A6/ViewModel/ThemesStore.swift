@@ -56,6 +56,15 @@ class ThemesStore: ObservableObject {
         themes.append(newTheme)
     }
     
+    func theme(for themeID: Theme.ID) -> Theme? {
+        if let index = themes.firstIndex(where: { $0.id == themeID}) {
+            return themes[index]
+        }
+        else {
+            return nil
+        }
+    }
+    
 }
 
 

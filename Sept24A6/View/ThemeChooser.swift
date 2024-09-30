@@ -13,40 +13,49 @@ struct ThemeChooser: View {
     
     @ObservedObject var store: ThemesStore
     
+    @State var showThemeEditor = false
+    //@State var chosenTheme: Theme?
+    @State var chosenThemeId: Theme.ID = 0
+    
     var body: some View {
         NavigationStack {
             List {
                 ForEach(store.themes) { theme in
                     ScrollView {
                         NavigationLink(value: theme.id) {
-                            VStack {
-                                HStack {
-                                    Text(theme.name)
-                                        .fontWeight(.bold)
-                                        .font(.system(size: 20))
-                                    //Circle()
-                                    //  .frame(maxWidth: 20)
-                                    //  .foregroundStyle(theme.primaryColor)
-                                    Spacer()
-                                    Text("\(theme.numOfPairsOfCards * 2) cards")
-                                }
-                                Spacer()
-                                HStack {
-                                    ForEach(theme.emojis[0..<min(10, theme.emojis.count)], id: \.self) { emoji in
-                                        Text(emoji)
-                                            .aspectRatio(contentMode: .fill)
-                                            .truncationMode(.tail)
-                                    }
-                                }
-                            }
+                            ThemeRow(theme: theme)
                             .foregroundStyle(theme.primaryColor)
+                            .swipeActions(edge: .leading) {
+                                Button("Edit", systemImage: "pencil") {
+                                    chosenThemeId = theme.id
+                                    showThemeEditor = true
+                                }
+                                .tint(.blue)
+                            }
                         }
                     }
                 }
+                .onDelete { indexSet in
+                    withAnimation {
+                        store.themes.remove(atOffsets: indexSet)
+                    }
+                }
+                
+                
             }
             .navigationDestination(for: Theme.ID.self) { themeId in
-                if let index = store.themes.firstIndex(where: { $0.id == themeId }) {
-                    EmojiMemoryGameView(game: EmojiMemoryGame(store.themes[index]))
+//                if let index = store.themes.firstIndex(where: { $0.id == themeId }) {
+//                    EmojiMemoryGameView(game: EmojiMemoryGame(store.themes[index]))
+//                }
+                if let theme = store.theme(for: themeId) {
+                    EmojiMemoryGameView(game: EmojiMemoryGame(theme))
+                }
+                
+            }
+            .sheet(isPresented: $showThemeEditor) {
+                if let themeToEdit = store.theme(for: chosenThemeId) {
+                    Text("Test")
+                    ThemeEditor(theme: themeToEdit)
                 }
             }
             .navigationTitle("Themes")
@@ -60,8 +69,36 @@ struct ThemeChooser: View {
             }
         }
     }
+    
+    
+    
+    struct ThemeRow: View {
+        var theme: Theme
+        var body: some View {
+            VStack {
+                HStack {
+                    Text(theme.name)
+                        .fontWeight(.bold)
+                        .font(.system(size: 20))
+                    //Circle()
+                    //  .frame(maxWidth: 20)
+                    //  .foregroundStyle(theme.primaryColor)
+                    Spacer()
+                    Text("\(theme.numOfPairsOfCards * 2) cards")
+                }
+                Spacer()
+                HStack {
+                    ForEach(theme.emojis[0..<min(10, theme.emojis.count)], id: \.self) { emoji in
+                        Text(emoji)
+                            .aspectRatio(contentMode: .fill)
+                            .truncationMode(.tail)
+                    }
+                }
+            }
+        }
+    }
 }
 
-//#Preview {
-//    ThemeChooser(themesStore: ThemesStore())
-//}
+#Preview {
+    ThemeChooser(store: ThemesStore())
+}
