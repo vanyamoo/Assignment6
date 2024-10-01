@@ -67,7 +67,8 @@ import SwiftUI
 
 extension Theme {
     var primaryColor: Color {
-        Color(rgba: color)
+        get { Color(rgba: color) }
+        set { color = RGBA(color: newValue) }
     }
 }
  
