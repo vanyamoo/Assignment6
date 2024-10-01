@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ThemeEditor: View {
     
-    var theme: Theme
+    @Binding var theme: Theme
+    
     var body: some View {
         //VStack {
             Text(theme.name)
@@ -24,6 +25,7 @@ struct ThemeEditor: View {
     }
 }
 
-#Preview {
-    ThemeEditor(theme: Theme(name: "Music", emojis: ["🎼","🎤","🎹","🪘","🥁","🎺","🪗","🪕","🎻"], numOfPairsOfCards: 8, color: RGBA(color: .pink), id: 2))
-}
+//#Preview {
+//    @State var theme = ThemesStore().themes.first!
+//    return ThemeEditor(theme: $theme)
+//}

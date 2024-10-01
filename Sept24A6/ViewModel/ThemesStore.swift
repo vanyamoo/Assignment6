@@ -51,18 +51,32 @@ class ThemesStore: ObservableObject {
             max(partialResult, theme.id)
         }
         let newTheme = Theme(name: "New Theme", emojis: [], numOfPairsOfCards: 0, color: RGBA(color: .black), id: currentHighestId + 1)
-        //Theme(name: "Test", emojis: ["🎼","🎤","🎹","🪘","🥁","🎺","🪗","🪕","🎻"], numOfPairsOfCards: 8, color: RGBA(color: .pink), id: currentHighestId + 1)
         
         themes.append(newTheme)
     }
     
     func theme(for themeID: Theme.ID) -> Theme? {
-        if let index = themes.firstIndex(where: { $0.id == themeID}) {
+        if let index = themeIndex(for: themeID) {
             return themes[index]
+        } else {
+            return nil
+        }
+    }
+    
+    func themeIndex(for themeID: Theme.ID) -> Int? {
+        if let index = themes.firstIndex(where: { $0.id == themeID}) {
+            return index
         }
         else {
             return nil
         }
+    }
+    
+    private var _cursorIndex = 0
+    
+    var cursorIndex: Int {
+        get { _cursorIndex }
+        set { _cursorIndex = newValue }
     }
     
 }
