@@ -81,4 +81,24 @@ class ThemesStore: ObservableObject {
     
 }
 
+extension Array where Element == String {
+    var uniqued: [Element] {
+        reduce(into: []) { partialResult, element in
+            if !partialResult.contains(element) {
+                partialResult.append(element)
+            }
+        }
+    }
+}
+
+extension String {
+    var isEmoji: Bool {
+        if let firstScalar = Character(self).unicodeScalars.first, firstScalar.properties.isEmoji {
+            return (firstScalar.value >= 0x238d || unicodeScalars.count > 1)
+        } else {
+            return false
+        }
+    }
+}
+
 

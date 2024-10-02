@@ -21,45 +21,59 @@ struct ThemeEditor: View {
                 Text("Name")
             }
 
-            Section("Emojis") {
-                TextField("Add emojis here", text: $emojisToAdd)
-                    .onChange(of: emojisToAdd) { oldValue, newValue in
-                        if let newEmoji = newValue.last {
-                            theme.emojis = [String(newEmoji)] + theme.emojis
-                        }
-                    }
-                Text("Tap to Remove Emojis").font(.caption).foregroundColor(.gray)
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 20, maximum: 60))], content: {
-                    ForEach(theme.emojis, id: \.self) { emoji in
-                        Text(emoji)
-                            .onTapGesture {
-                                withAnimation {
-                                    theme.emojis.removeAll(where: {$0 == emoji})
-                                    emojisToAdd.removeAll(where: {String($0) == emoji})
-                                }
-                            }
-                    }
-                })
-            }
+            Section(content: {
+                emojisSection
+            }, header: {
+                Text("Emojis")
+            }, footer: {
+                Text("Tap to Remove Emojis")
+            })
             
             Section("Cards") {
-                Stepper("Cards \(theme.numOfPairsOfCards * 2)",
-                        onIncrement: {
-                    if theme.numOfPairsOfCards < theme.emojis.count {
-                        theme.numOfPairsOfCards += 1
-                    }
-                },
-                        onDecrement: {
-                    if theme.numOfPairsOfCards > 2 {
-                        theme.numOfPairsOfCards -= 1
-                    }
-                })
+                cardsSection
             }
             
             Section("Color") {
                 ColorPicker("Color", selection: $theme.primaryColor)
             }
         }
+    }
+    
+    @ViewBuilder
+    private var emojisSection: some View {
+        TextField("Add emojis here", text: $emojisToAdd)
+            .onChange(of: emojisToAdd) { oldValue, newValue in
+                if let newEmoji = newValue.last {
+                    theme.emojis = ([String(newEmoji)] + theme.emojis).filter({$0.isEmoji}).uniqued
+                }
+            }
+        
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 20, maximum: 60))], content: {
+            ForEach(theme.emojis, id: \.self) { emoji in
+                Text(emoji)
+                    .onTapGesture {
+                        withAnimation {
+                            theme.emojis.removeAll(where: {$0 == emoji})
+                            emojisToAdd.removeAll(where: {String($0) == emoji})
+                        }
+                    }
+            }
+        })
+    }
+    
+    @ViewBuilder
+    private var cardsSection: some View {
+        Stepper("Cards \(theme.numOfPairsOfCards * 2)",
+                onIncrement: {
+            if theme.numOfPairsOfCards < theme.emojis.count {
+                theme.numOfPairsOfCards += 1
+            }
+        },
+                onDecrement: {
+            if theme.numOfPairsOfCards > 2 {
+                theme.numOfPairsOfCards -= 1
+            }
+        })
     }
 }
 
