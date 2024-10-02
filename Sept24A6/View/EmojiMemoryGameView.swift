@@ -15,33 +15,50 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         VStack(spacing: 30) {
             HStack {
-                Text("Score: \(game.score)")
+                score
                 Spacer()
-                Text(game.theme.name)
-                    .foregroundStyle(game.theme.primaryColor)
+                themeName
                 Spacer()
-                Button("New Game") {
-                    //game.startNewGame()
-                }
+                newGame
             }
-            
-            
             Spacer()
-            
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
-                ForEach(game.cards) { card in
-                    CardView(card: card)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .padding(4)
-                        .onTapGesture {
-                            game.choose(card)
-                        }
-                }
-            }
-            .foregroundStyle(game.theme.primaryColor)
+            cards
             Spacer()
         }
         .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private var score: some View {
+        Text("Score: \(game.score)")
+    }
+    
+    @ViewBuilder
+    private var themeName: some View {
+        Text(game.theme.name)
+            .foregroundStyle(game.theme.primaryColor)
+    }
+    
+    @ViewBuilder
+    private var newGame: some View {
+        Button("New Game") {
+            game.startNewGame(game.theme)
+        }
+    }
+    
+    @ViewBuilder
+    private var cards: some View {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
+            ForEach(game.cards) { card in
+                CardView(card: card)
+                    .aspectRatio(2/3, contentMode: .fit)
+                    .padding(4)
+                    .onTapGesture {
+                        game.choose(card)
+                    }
+            }
+        }
+        .foregroundStyle(game.theme.primaryColor)
     }
 }
 

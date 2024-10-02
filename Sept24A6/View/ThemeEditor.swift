@@ -22,7 +22,8 @@ struct ThemeEditor: View {
             }
 
             Section(content: {
-                emojisSection
+                emojisToAddTextField
+                emojis
             }, header: {
                 Text("Emojis")
             }, footer: {
@@ -30,7 +31,7 @@ struct ThemeEditor: View {
             })
             
             Section("Cards") {
-                cardsSection
+                numOfCards
             }
             
             Section("Color") {
@@ -40,14 +41,17 @@ struct ThemeEditor: View {
     }
     
     @ViewBuilder
-    private var emojisSection: some View {
+    private var emojisToAddTextField: some View {
         TextField("Add emojis here", text: $emojisToAdd)
             .onChange(of: emojisToAdd) { oldValue, newValue in
                 if let newEmoji = newValue.last {
                     theme.emojis = ([String(newEmoji)] + theme.emojis).filter({$0.isEmoji}).uniqued
                 }
             }
-        
+    }
+    
+    @ViewBuilder
+    private var emojis: some View {
         LazyVGrid(columns: [GridItem(.adaptive(minimum: 20, maximum: 60))], content: {
             ForEach(theme.emojis, id: \.self) { emoji in
                 Text(emoji)
@@ -62,14 +66,14 @@ struct ThemeEditor: View {
     }
     
     @ViewBuilder
-    private var cardsSection: some View {
+    private var numOfCards: some View {
         Stepper("Cards \(theme.numOfPairsOfCards * 2)",
-                onIncrement: {
+        onIncrement: {
             if theme.numOfPairsOfCards < theme.emojis.count {
                 theme.numOfPairsOfCards += 1
             }
         },
-                onDecrement: {
+        onDecrement: {
             if theme.numOfPairsOfCards > 2 {
                 theme.numOfPairsOfCards -= 1
             }

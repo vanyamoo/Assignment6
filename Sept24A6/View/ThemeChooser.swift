@@ -17,30 +17,7 @@ struct ThemeChooser: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(store.themes) { theme in
-                    ScrollView {
-                        NavigationLink(value: theme.id) {
-                            ThemeRow(theme: theme)
-                            .foregroundStyle(theme.primaryColor)
-                            .swipeActions(edge: .leading) {
-                                Button("Edit", systemImage: "pencil") {
-                                    if let index = store.themeIndex(for: theme.id) {
-                                        store.cursorIndex = index
-                                    }
-                                    showThemeEditor = true
-                                }
-                                .tint(.blue)
-                            }
-                        }
-                    }
-                }
-                .onDelete { indexSet in
-                    withAnimation {
-                        store.themes.remove(atOffsets: indexSet)
-                    }
-                }
-            }
+            themeList
             .navigationDestination(for: Theme.ID.self) { themeId in
                 if let theme = store.theme(for: themeId) {
                     EmojiMemoryGameView(game: EmojiMemoryGame(theme))
@@ -51,11 +28,27 @@ struct ThemeChooser: View {
             }
             .navigationTitle("Themes")
             .toolbar {
-                Button {
-                    store.append(name: "")
-                    //showCursorPalette = true
-                } label: {
-                    Image(systemName: "plus")
+                new
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private var themeList: some View {
+        List {
+            ForEach(store.themes) { theme in
+                ScrollView {
+                    NavigationLink(value: theme.id) {
+                        ThemeRow(theme: theme)
+                            .swipeActions(edge: .leading) {
+                                editButton(theme.id)
+                            }
+                    }
+                }
+            }
+            .onDelete { indexSet in
+                withAnimation {
+                    store.themes.remove(atOffsets: indexSet)
                 }
             }
         }
@@ -66,21 +59,62 @@ struct ThemeChooser: View {
         var body: some View {
             VStack {
                 HStack {
-                    Text(theme.name)
-                        .fontWeight(.bold)
-                        .font(.system(size: 20))
+                    themeName
                     Spacer()
-                    Text("\(theme.numOfPairsOfCards * 2) cards")
+                    numOfCards
                 }
                 Spacer()
-                HStack {
-                    ForEach(theme.emojis[0..<min(10, theme.emojis.count)], id: \.self) { emoji in
-                        Text(emoji)
-                            .aspectRatio(contentMode: .fill)
-                            .truncationMode(.tail)
-                    }
+                emojis
+            }
+            .foregroundStyle(theme.primaryColor)
+        }
+        
+        @ViewBuilder
+        private var themeName: some View {
+            Text(theme.name)
+                .fontWeight(.bold)
+                .font(.system(size: 20))
+        }
+        
+        @ViewBuilder
+        private var numOfCards: some View {
+            Text("\(theme.numOfPairsOfCards * 2) cards")
+        }
+        
+        @ViewBuilder
+        private var emojis: some View {
+            HStack {
+                ForEach(theme.emojis[0..<min(10, theme.emojis.count)], id: \.self) { emoji in
+                    Text(emoji)
+                        .aspectRatio(contentMode: .fill)
+                        .truncationMode(.tail)
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    private func editButton(_ themeId:Theme.ID) -> some View {
+        Button("Edit", systemImage: "pencil") {
+            editTheme(themeId)
+        }
+        .tint(.blue)
+    }
+    
+    private func editTheme(_ themeId:Theme.ID) {
+        if let index = store.themeIndex(for: themeId) {
+            store.cursorIndex = index
+        }
+        showThemeEditor = true
+    }
+    
+    @ViewBuilder
+    private var new: some View {
+        Button {
+            let newTheme = store.append(name: "")
+            editTheme(newTheme.id)
+        } label: {
+            Image(systemName: "plus")
         }
     }
 }

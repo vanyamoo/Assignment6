@@ -17,14 +17,13 @@ class ThemesStore: ObservableObject {
             }
         }
         set {
-            
             if !newValue.isEmpty {
                 save(newValue, to: themesURL)
                 objectWillChange.send()
             }
         }
     }
-    
+// MARK: - Persistentce
     private let themesURL = URL.documentsDirectory.appendingPathComponent("Themes.emojigame")
     
     private func loadThemeData() -> [Theme]? {
@@ -36,7 +35,6 @@ class ThemesStore: ObservableObject {
         }
     }
 
-    
     private func save(_ data: [Theme], to url: URL) {
         do {
             let jsonData = try JSONEncoder().encode(data)
@@ -46,15 +44,18 @@ class ThemesStore: ObservableObject {
         }
     }
     
-    func append(name: String, emojis: [String] = [], numOfPairsOfCards: Int = 0, color: RGBA = RGBA(color: Color.clear)) {
+// MARK: - Adding themes
+    func append(name: String, emojis: [String] = [], numOfPairsOfCards: Int = 0, color: RGBA = RGBA(color: Color.clear)) -> Theme {
         let currentHighestId = themes.reduce(0) { partialResult, theme in
             max(partialResult, theme.id)
         }
         let newTheme = Theme(name: "New Theme", emojis: [], numOfPairsOfCards: 0, color: RGBA(color: .black), id: currentHighestId + 1)
         
         themes.append(newTheme)
+        return newTheme
     }
     
+// MARK: - Helpers for the View
     func theme(for themeID: Theme.ID) -> Theme? {
         if let index = themeIndex(for: themeID) {
             return themes[index]

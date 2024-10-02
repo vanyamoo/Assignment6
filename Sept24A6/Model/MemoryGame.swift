@@ -13,9 +13,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var score = 0
     
     private mutating func calculateScore(_ match: Bool, indicesOfCardsInRound: Array<Int>) {
-            if match {
-                score += 2
-            }
+            if match { score += 2 }
             else {
                 indicesOfCardsInRound.forEach { index in score -= cards[index].isSeen ? 1 : 0 }
             }

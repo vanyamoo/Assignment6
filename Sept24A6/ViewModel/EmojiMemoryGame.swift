@@ -31,18 +31,10 @@ import SwiftUI
         }
     }
     
-//    private static func createRandomTheme() -> Theme {
-//        Theme.builtinThemes.randomElement()!
-//    }
-    
     var cards: Array<Card> {
         model.cards
     }
-    
-//    var themeColor: Color {
-//        Color(rgba: theme.color)
-//    }
-//    
+       
 // MARK: - Intent(s)
     
     func choose(_ card: Card) {
@@ -71,35 +63,6 @@ extension Theme {
         set { color = RGBA(color: newValue) }
     }
 }
- 
-//extension Theme {
-//    var mainColor: Color {
-//        switch color {
-//        case "blue":
-//            return .blue
-//        case "red":
-//            return .red
-//        case "green":
-//            return .green
-//        case "brown":
-//            return .brown
-//        case "yellow":
-//            return .yellow
-//        case "orange":
-//            return .orange
-//        case "purple":
-//            return .purple
-//        case "gray":
-//            return .gray
-//        case "pink":
-//            return .pink
-//        case "cyan":
-//            return .cyan
-//        default:
-//            return .black
-//        }
-//    }
-//}
 
 extension Color {
     init(rgba: RGBA) {
