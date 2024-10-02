@@ -57,7 +57,7 @@ struct ThemeChooser: View {
     struct ThemeRow: View {
         var theme: Theme
         var body: some View {
-            VStack {
+            VStack(alignment: .leading) {
                 HStack {
                     themeName
                     Spacer()

@@ -50,7 +50,6 @@ class ThemesStore: ObservableObject {
             max(partialResult, theme.id)
         }
         let newTheme = Theme(name: "New Theme", emojis: [], numOfPairsOfCards: 0, color: RGBA(color: .black), id: currentHighestId + 1)
-        
         themes.append(newTheme)
         return newTheme
     }
